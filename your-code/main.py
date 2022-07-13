@@ -9,7 +9,7 @@ print(np.version.version)
 
 #3. Generate a 2x3x5 3-dimensional array with random values. Assign the array to variable "a"
 # Challenge: there are at least three easy ways that use numpy to generate random arrays. How many ways can you find?
-a = array(2,3,5)
+a = np.random.rand(2,3,5)
 
 
 #4. Print a.
@@ -18,51 +18,69 @@ print(a)
 
 #5. Create a 5x2x3 3-dimensional array with all values equaling 1.
 #Assign the array to variable "b"
-
+b = np.ones([5,3,2])
 
 
 #6. Print b.
-
+print(b)
 
 
 #7. Do a and b have the same size? How do you prove that in Python code?
-
+if len(a) == len(b):
+        print('A and B have the same size')
+else:
+        print('A and B don\'t have the same size')
 
 
 
 #8. Are you able to add a and b? Why or why not?
-
+try:
+        c = a+b
+except:
+        print('can\'t add arrays of unique sizes')
 
 
 #9. Transpose b so that it has the same structure of a (i.e. become a 2x3x5 array). Assign the transposed array to varialbe "c".
-
+c = b.transpose()
 
 
 #10. Try to add a and c. Now it should work. Assign the sum to varialbe "d". But why does it work now?
+try:
+        d = a+c
+except:
+        print('can\'t add this')
 
 
 
 #11. Print a and d. Notice the difference and relation of the two array in terms of the values? Explain.
-
+print(a, '\n\n', d)
 
 
 
 #12. Multiply a and c. Assign the result to e.
-
+e = a*c
 
 
 #13. Does e equal to a? Why or why not?
-
+if np.array_equiv(e,a):
+        print('e is equal to a')
+else:
+        print('e is not equal to a')
 
 
 
 #14. Identify the max, min, and mean values in d. Assign those values to variables "d_max", "d_min", and "d_mean"
-
+d_min = d.min() 
+print(f'{d_min}')
+d_max = d.max()
+print(d.max())
+d_mean = d.mean()
+print(d_mean)
 
 
 
 #15. Now we want to label the values in d. First create an empty array "f" with the same shape (i.e. 2x3x5) as d using `np.empty`.
-
+f = np.empty([2,3,5])
 
 
 
@@ -75,7 +93,30 @@ Assign 100 to the corresponding value(s) in f for d_max in d.
 In the end, f should have only the following values: 0, 25, 50, 75, and 100.
 Note: you don't have to use Numpy in this question.
 """
-
+# f = [elem for sub3 in d for elem in sub3]
+x,y,z=-1,-1,-1
+for sub5 in d:
+        x+=1
+        for sub3 in sub5:
+                y+=1
+                for elem in sub3:
+                        z+=1
+                        if elem > d_min and elem < d_mean:
+                                f[x,y,z] = 25 #f[sub5][sub3][elem] = 25
+                        elif elem > d_mean and elem < d_max:
+                                f[x,y,z] = 75 #f[sub5][sub3][elem] = 75
+                        elif elem == d_mean:
+                                f[x,y,z] = 50 #f[sub5][sub3][elem] = 50
+                        elif elem == d_min:
+                                f[x,y,z] = 0 #f[sub5][sub3][elem] = 0
+                        elif elem == d_max:
+                                f[x,y,z] = 100 #f[sub5][sub3][elem] = 100
+                        else:
+                                f[x,y,z] = '#' #f[sub5][sub3][elem] = '#'
+                        if z==4:
+                                z=-1
+                if y==2:
+                        y=-1
 
 
 
@@ -99,7 +140,8 @@ array([[[ 75.,  75.,  75.,  25.,  75.],
         [ 75.,  75.,  75.,  75.,  75.],
         [ 25.,  75.,   0.,  75.,  75.]]])
 """
-
+print('this is d:', d)
+print('this is f:', f)
 
 """
 #18. Bonus question: instead of using numbers (i.e. 0, 25, 50, 75, and 100), how to use string values 
@@ -113,3 +155,30 @@ array([[[ 'D',  'D',  'D',  'B',  'D'],
         [ 'B',  'D',   'A',  'D', 'D']]])
 Again, you don't need Numpy in this question.
 """
+bonus = np.empty([2,3,5], dtype=str)
+print('this is bonus: \n', bonus)
+
+x,y,z=-1,-1,-1
+for sub5 in f:
+        x+=1
+        for sub3 in sub5:
+                y+=1
+                for elem in sub3:
+                        z+=1
+                        if elem == 25.:
+                                bonus[x,y,z] = 'B'
+                        elif elem == 75.:
+                                bonus[x,y,z] = 'D'
+                        elif elem == 50.:
+                                bonus[x,y,z] = 'C'
+                        elif elem == 0.:
+                                bonus[x,y,z] = 'A'
+                        elif elem == 100.:
+                                bonus[x,y,z] = 'E'
+                        else:
+                                bonus[x,y,z] = '#'
+                        if z==4:
+                                z=-1
+                if y==2:
+                        y=-1
+print(bonus)
